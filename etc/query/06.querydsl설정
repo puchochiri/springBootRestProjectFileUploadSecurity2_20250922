@@ -1,0 +1,6 @@
+buildgradle 설정 후
+
+1. Gradle/Tasks/build/clean
+2. Gradle/Tasks/other/compileJava
+
+3.build/classes/

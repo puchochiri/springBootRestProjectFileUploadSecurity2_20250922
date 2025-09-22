@@ -1,0 +1,4 @@
+자동 셋팅 됨
+
+Edit Configuration/Modify Option/On Update action/Update Classes aand resources 클릭
+Edit Configuration/Modify Option/On frame deactivation/Update Classes aand resources 클릭

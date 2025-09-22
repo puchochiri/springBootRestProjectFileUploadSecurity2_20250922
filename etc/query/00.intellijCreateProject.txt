@@ -1,0 +1,18 @@
+1. File/New/Project
+2. Spring Initializer
+3. Name : springbootproject
+   Location : D:\javaWork
+   Language : Java
+   Type : Gradle
+   Group : org.zerock
+   Artifact : jdbcex
+   jdk : 17
+   Packing: Jar
+   Next
+4. Dependencies
+    Spring Boot DevTools
+    Lombok
+    Spring Web
+    Thymeleaf
+    Spring Data JPA
+    MariaDB Driver
