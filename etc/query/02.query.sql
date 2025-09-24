@@ -124,3 +124,7 @@ create table persistent_logins (
 );
 
 select * from persistent_logins;
+
+select * from member;
+
+select * from member_role_set;
