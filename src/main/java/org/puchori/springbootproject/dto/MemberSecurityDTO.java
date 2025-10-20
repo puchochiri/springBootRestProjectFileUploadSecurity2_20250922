@@ -20,7 +20,7 @@ public class MemberSecurityDTO extends User {
     private boolean social;
 
 
-    public MemberSecurityDTO(String username, String password, String email, boolean enabled, boolean del, boolean social, Collection<? extends GrantedAuthority> authorities) {
+    public MemberSecurityDTO(String username, String password, String email, boolean del, boolean social, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
 
         this.mid = username;

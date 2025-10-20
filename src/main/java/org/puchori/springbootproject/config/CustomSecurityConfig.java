@@ -4,6 +4,7 @@ package org.puchori.springbootproject.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.puchori.springbootproject.security.CustomOAuth2UserService;
 import org.puchori.springbootproject.security.CustomUserDetailsService;
 import org.puchori.springbootproject.security.handler.Custom403Handler;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -35,7 +36,7 @@ public class CustomSecurityConfig {
   private final CustomUserDetailsService userDetailsService;
 
 
-
+  private final CustomOAuth2UserService customOAuth2UserService;
 
   @Bean
   public PasswordEncoder passwordEncoder() {
@@ -51,11 +52,20 @@ public class CustomSecurityConfig {
       .authorizeHttpRequests(auth -> auth
           .requestMatchers("/css/**", "/js/**", "images/**",   "/favicon.ico").permitAll() // 정적 리소스 혀용
           .requestMatchers("/member/login").permitAll()                    // 로그인 페이지
+          .requestMatchers("/member/join").permitAll()                    // 회원가입 페이지
           .anyRequest().authenticated() // 나머지는 인증필요
         )
       .formLogin(form -> form
               .loginPage("/member/login")
               .defaultSuccessUrl("/board/list", true)
+      )
+      // oAuth2 로그인 추가부분
+      .oauth2Login(oauth2 -> oauth2
+              .loginPage("/member/login")       // 소셜 로그인 진입 시 사용할 로그인 페이지
+              .defaultSuccessUrl("/board/list",true) // 로그인 성공 후 이동할 url
+              .userInfoEndpoint(userInfo ->
+                      userInfo.userService(customOAuth2UserService) // 여기로 등록
+              )
       )
       .csrf(csrf -> csrf.disable())
       .rememberMe(rememberMe -> rememberMe
