@@ -130,6 +130,6 @@ select * from member order by regdate desc;
 select * from member_role_set;
 
 
-
+select * from member
 
 

@@ -38,10 +38,10 @@ public class CustomSecurityConfig {
 
   private final CustomOAuth2UserService customOAuth2UserService;
 
-  @Bean
+/*  @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
-  }
+  }*/
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
