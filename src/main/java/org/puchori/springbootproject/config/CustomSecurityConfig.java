@@ -67,6 +67,13 @@ public class CustomSecurityConfig {
                       userInfo.userService(customOAuth2UserService) // 여기로 등록
               )
       )
+      // 로그아웃
+            .logout(logout -> logout
+                    .logoutUrl("/member/logout")
+                    .logoutSuccessUrl("/member/login?logout") // 로그아웃 성공 시 이동
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+            )
       .csrf(csrf -> csrf.disable())
       .rememberMe(rememberMe -> rememberMe
       .key("12345678")
