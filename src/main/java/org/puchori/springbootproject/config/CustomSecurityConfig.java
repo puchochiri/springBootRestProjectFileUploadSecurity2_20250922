@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.puchori.springbootproject.security.CustomOAuth2UserService;
 import org.puchori.springbootproject.security.CustomUserDetailsService;
 import org.puchori.springbootproject.security.handler.Custom403Handler;
+import org.puchori.springbootproject.security.handler.CustomSocialLoginSuccessHandller;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -37,6 +39,8 @@ public class CustomSecurityConfig {
 
 
   private final CustomOAuth2UserService customOAuth2UserService;
+
+  private final PasswordEncoder passwordEncoder;
 
 /*  @Bean
   public PasswordEncoder passwordEncoder() {
@@ -62,10 +66,14 @@ public class CustomSecurityConfig {
       // oAuth2 로그인 추가부분
       .oauth2Login(oauth2 -> oauth2
               .loginPage("/member/login")       // 소셜 로그인 진입 시 사용할 로그인 페이지
-              .defaultSuccessUrl("/board/list",true) // 로그인 성공 후 이동할 url
               .userInfoEndpoint(userInfo ->
-                      userInfo.userService(customOAuth2UserService) // 여기로 등록
-              )
+                              userInfo.userService(customOAuth2UserService)) // 여기로 등록
+              .successHandler(authenticationSuccessHandler())
+/*
+              .defaultSuccessUrl("/board/list",true) // 로그인 성공 후 이동할 url
+*/
+
+
       )
       // 로그아웃
             .logout(logout -> logout
@@ -117,5 +125,9 @@ public class CustomSecurityConfig {
   }
 
 
+  @Bean
+  public AuthenticationSuccessHandler authenticationSuccessHandler() {
+    return new CustomSocialLoginSuccessHandller(passwordEncoder);
+  }
 
 }
