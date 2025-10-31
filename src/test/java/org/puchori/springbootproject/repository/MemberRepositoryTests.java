@@ -8,6 +8,7 @@ import org.puchori.springbootproject.domain.MemberRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.Commit;
 
 import javax.swing.text.html.Option;
 import java.util.Optional;
@@ -56,6 +57,14 @@ public class MemberRepositoryTests {
         member.getRoleSet().forEach(memberRole -> log.info(memberRole.name()));
     }
 
+    @Commit
+    @Test
+    public void testUpdate(){
+        String mid ="inay1083@naver.com"; // 소셜로그인으로 추가된 사용자로 현재 DB에 존재하는 이메일
+        String mpw = passwordEncoder.encode("54321");
+
+        memberRepository.updatePassword(mpw,mid);
+    }
 
 
 }
